@@ -1,0 +1,28 @@
+import pandas as pd
+import datetime
+import numpy as np
+from matplotlib import pyplot as plt
+import csv
+
+df = pd.read_csv(r'.btctradeCNY.csv', names=['timestamp', 'price', 'volume'])
+# print(df)
+# print(df.shape)
+
+
+for i in range(0, len(df)):
+    row = df.iloc[i]['timestamp']
+    a = int(row)
+    date = datetime.datetime.utcfromtimestamp(a)
+    NewDate = date.strftime("%Y-%m-%d %H:%M:%S")
+    df['timestamp'].replace(row, NewDate)
+df.to_csv(r'test2.csv', encoding='gbk')
+
+# 去重
+# print(df.duplicated().tail())
+# print(df[df.duplicated()])
+
+df1 = df.drop_duplicates()
+
+df2 = df1.drop(columns='price', axis=0)
+
+
